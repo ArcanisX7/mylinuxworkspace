@@ -42,7 +42,7 @@ link_dotfiles() {
 
 install_system_files() {
     log "Installing system files into /etc"
-    local src dest grub_changed=0
+    local src dest grub_changed=0 systemd_changed=0
     while IFS= read -r -d '' src; do
         dest="${src#"$REPO_DIR/system"}"
         if ! cmp -s "$src" "$dest"; then
@@ -51,12 +51,20 @@ install_system_files() {
             if [[ "$dest" == /etc/default/grub* ]]; then
                 grub_changed=1
             fi
+            if [[ "$dest" == /etc/systemd/system.conf.d/* ]]; then
+                systemd_changed=1
+            fi
         fi
     done < <(find "$REPO_DIR/system" -type f -print0)
 
     if (( grub_changed )); then
         log "Regenerating GRUB configuration"
         sudo update-grub
+    fi
+
+    if (( systemd_changed )); then
+        log "Reloading systemd manager configuration"
+        sudo systemctl daemon-reexec
     fi
 }
 
