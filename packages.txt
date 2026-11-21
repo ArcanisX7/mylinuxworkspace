@@ -1,0 +1,35 @@
+# Packages installed by install.sh (Debian 13 stable, main only).
+# One package per line, comments start with #.
+
+# Version control and dotfiles
+git
+stow
+
+# Sway and Wayland session
+sway
+swaybg
+swayidle
+swaylock
+xdg-desktop-portal-wlr
+
+# Bar, launcher, notifications
+waybar
+wofi
+mako-notifier
+fonts-font-awesome
+
+# Terminal
+kitty
+
+# Screenshots, clipboard, brightness
+grim
+slurp
+wl-clipboard
+brightnessctl
+
+# Audio
+pipewire-audio
+wireplumber
+
+# Applications
+firefox-esr
